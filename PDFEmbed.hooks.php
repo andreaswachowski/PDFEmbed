@@ -128,6 +128,13 @@ class PDFEmbed
             if (count($re) == 3) {
                 $page = $re[2];
             }
+
+            $ns_media_wiki_lang = MediaWiki\MediaWikiServices::getInstance()->getContentLanguage()->getFormattedNsText( NS_MEDIA );
+            $ns_file_wiki_lang = MediaWiki\MediaWikiServices::getInstance()->getContentLanguage()->getFormattedNsText( NS_FILE );
+            $ns_media_lang_en = MediaWiki\MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' )->getFormattedNsText( NS_MEDIA );
+            $ns_file_lang_en = MediaWiki\MediaWikiServices::getInstance()->getLanguageFactory()->getLanguage( 'en' )->getFormattedNsText( NS_FILE );
+            $filename = preg_replace("/^($ns_media_wiki_lang|$ns_file_wiki_lang|$ns_media_lang_en|$ns_file_lang_en):/", '', $filename);
+
             $pdfFile = wfFindFile($filename);
             if ($pdfFile !== false) {
                 $url = $pdfFile->getFullUrl();
